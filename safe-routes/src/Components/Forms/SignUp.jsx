@@ -67,6 +67,7 @@ function SignUp(){
                     </Label>
                     <Label> Last Name
                     <Input type="text" name="lastName"  placeholder="Doe" onChange={handleOnChange} />
+                    <Error>{formValues.lastNameError}</Error>
                     </Label>
                     <Label> Email
                     <Input type="email" name="email"  placeholder="example@johndoe.com" id="email" onChange={handleOnChange} />
