@@ -81,3 +81,8 @@ export const Form = styled.form`
     flex-direction: column;
     justify-content: space-around;
 `
+
+export const Error = styled.p`
+    font-size: 1.3rem;
+    color: red;
+`
