@@ -1,12 +1,15 @@
 import React from 'react';
+import Login from "./Components/Forms/SignIn";
+import {Route} from "react-router-dom";
+
 
 
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello</h1>
-    </div>
+    <>
+      <Route path="/SignIn" render={(props)=><Login {...props}/>}/>
+    </>
   );
 }
 
