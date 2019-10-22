@@ -1,10 +1,12 @@
 import React, {useState} from "react";
-import {Btn, FormContainer, Title, Label, Input, LinkContainer, StyledLink, ParentContainer, ImgContainer, SubTitle, Form} from "./formsStyle";
+import {Btn, FormContainer, Title, Label, Input, LinkContainer, StyledLink, ParentContainer, SubTitle, Form} from "./formsStyle";
+import Logo from "../Logo/Logo";
+import SideImage from "./SideImage"
 
 function Login(){
 
     const [formValues, setFormValues] = useState({
-        username: "",
+        email: "",
         password: ""
     })
     
@@ -21,11 +23,11 @@ function Login(){
     return(
         <ParentContainer>
             <FormContainer>
-                <Title>Safe-Routes</Title>
+                <Logo />
                 <Form>
                     <SubTitle>SIGN IN</SubTitle> 
-                    <Label> Username
-                    <Input type="text" name="username"  placeholder="Username" onChange={handleOnChange} />
+                    <Label> Email
+                    <Input type="email" name="email"  placeholder="example@johndoe.com" onChange={handleOnChange} />
                     </Label>
                     <Label> Password
                     <Input type="password"  name="password" placeholder="**********" onChange={handleOnChange} />
@@ -39,9 +41,7 @@ function Login(){
                     </div>
                 </LinkContainer>
             </FormContainer>
-            <ImgContainer>
-                <Title>Drive Safe With Us!</Title>
-            </ImgContainer>
+            <SideImage />
         </ParentContainer>
     )
 }

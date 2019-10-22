@@ -1,6 +1,8 @@
 import React,{useState} from "react";
-import {Btn, FormContainer, Title, Label, Input, LinkContainer, StyledLink, ParentContainer, Form, SubTitle, ImgContainer, Error} from "./formsStyle";
+import {Btn, FormContainer, Title, Label, Input, LinkContainer, StyledLink, ParentContainer, Form, SubTitle, Error} from "./formsStyle";
 import * as yup from "yup"
+import SideImage from "./SideImage"
+import Logo from "../Logo/Logo"
 
 function SignUp(){
     const [formValues, setFormValues] = useState({
@@ -40,7 +42,7 @@ function SignUp(){
     return(
         <ParentContainer>
             <FormContainer>
-                <Title>Safe-Routes</Title>
+                <Logo />
                 <Form>
                     <SubTitle>SIGN UP</SubTitle> 
                     <Label> First Name
@@ -55,11 +57,7 @@ function SignUp(){
                     <Input type="email" name="email"  placeholder="example@johndoe.com" id="email" onChange={handleOnChange} />
                     {/* <Error>{formValues.formErrors.emailError}</Error> */}
                     </Label>
-                    <Label> Username
-                    <Input type="text" name="username"  placeholder="Username" onChange={handleOnChange} />
-                    {/* <Error>{formValues.formErrors.usernameError}</Error> */}
-                    </Label>
-                    <Label> Password
+                    <Label> New Password
                     <Input type="password"  name="password" placeholder="**********" onChange={handleOnChange} />
                     {/* <Error>{formValues.formErrors.passwordError}</Error>
                     <Error>{formValues.formErrors.checkPasswordError}</Error> */}
@@ -76,9 +74,7 @@ function SignUp(){
                     </div>
                 </LinkContainer>
             </FormContainer>
-            <ImgContainer>
-                <Title>Drive Safe With Us!</Title>
-            </ImgContainer>
+            <SideImage></SideImage>
         </ParentContainer>
     )
 }
