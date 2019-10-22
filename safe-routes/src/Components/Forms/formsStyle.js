@@ -66,7 +66,7 @@ export const ParentContainer = styled.div `
 
 export const ImgContainer = styled.div `
     flex: 5;
-    background:linear-gradient(90deg, rgba(255, 255, 255,1) 0%, rgb(91, 100, 155,0.7) 100%), url("https://images.unsplash.com/photo-1524645343120-a4ae9f7d4343?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80") no-repeat center center /cover;
+    background:linear-gradient(90deg, rgba(255, 255, 255,1) 0%, rgb(255, 255, 255,0.1) 100%), url("https://images.unsplash.com/photo-1524645343120-a4ae9f7d4343?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80") no-repeat center center /cover;
     height: 100%;
     display: flex;
     justify-content: center;

@@ -13,6 +13,7 @@ function SignUp(){
         password: "",
         checkPassword: "",
     })
+
     
     let schema = yup.object().shape({
         firstName: yup.string().required(),
@@ -28,14 +29,11 @@ function SignUp(){
 
     const Submit = (e) => {
         e.preventDefault();
-        schema.isValid(formValues)
+        schema.validate(formValues)
             .then(valid=>{
                 if(valid){
                     console.log(formValues)
-                } else{
-                    console.log("not valid")
-                }
-            })
+            }})
 
     }
 
@@ -47,11 +45,11 @@ function SignUp(){
                     <SubTitle>SIGN UP</SubTitle> 
                     <Label> First Name
                     <Input type="text" name="firstName"  placeholder="John" onChange={handleOnChange} />
-                    <Error></Error>
+                    {/* <Error></Error> */}
                     </Label>
                     <Label> Last Name
                     <Input type="text" name="lastName"  placeholder="Doe" onChange={handleOnChange} />
-                    {/* <Error>{formValues.formErrors.lastNameError}</Error> */}
+                    {/* <Error>{errors.firstName}</Error> */}
                     </Label>
                     <Label> Email
                     <Input type="email" name="email"  placeholder="example@johndoe.com" id="email" onChange={handleOnChange} />
@@ -70,7 +68,7 @@ function SignUp(){
                 </Form>
                 <LinkContainer>
                     <div>
-                        <span>Already Have An Account? </span><StyledLink to="/SignIn">Sign In</StyledLink>
+                        <span>Already Have An Account? </span><StyledLink to="/">Sign In</StyledLink>
                     </div>
                 </LinkContainer>
             </FormContainer>
