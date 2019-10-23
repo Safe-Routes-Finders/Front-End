@@ -1,11 +1,11 @@
 import React, {useState} from "react";
-import {Btn, FormContainer, Title, Label, Input, LinkContainer, StyledLink, ParentContainer, SubTitle, Form} from "./formsStyle";
+import {Btn, FormContainer, Label, Input, LinkContainer, StyledLink, ParentContainer, SubTitle, Form, Error} from "./formsStyle";
 import Logo from "../Logo/Logo";
 import SideImage from "./SideImage"
 
 import axios from "axios";
 
-import { axiosWithAuth } from "../utils/axiosWithAuth";
+// import { axiosWithAuth } from "../utils/axiosWithAuth";
 import { connect } from "react-redux";
 import { fetchUser } from "../actions/index";
 import { postLogin } from "../actions";
@@ -16,8 +16,10 @@ const SignIn = props => {
         username: "",
         password: ""
     })
+    const [invalidError, setInvalidError] = useState("")
     
     const handleOnChange = (e) => {
+
         setFormValues(
             {...formValues,
             [e.target.name]: e.target.value});
@@ -25,24 +27,28 @@ const SignIn = props => {
 
     const Submit = (e) => {
         e.preventDefault();
-        console.log("im clicked")
-        axios
-        .post(`https://detman-saferoutes.herokuapp.com/login`, `grant_type=password&username=${formValues.username}&password=${formValues.password}`,{
-            headers: {
-              // btoa is converting our client id/client secret into base64
-              Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
-          })
-        .then(response => {
-          console.log("Post Response", response)
-          localStorage.setItem('token', response.data.access_token)
-          props.history.push("/map")
-        })
-        .catch(error => {
-          console.log(error)
-          setFormValues({username: "", password: ""})
-        })
+        console.log("im clicked");
+        props.postLogin(formValues,props);
+        setFormValues(formValues)
+    
+        // axios
+        // .post(`https://detman-saferoutes.herokuapp.com/login`, `grant_type=password&username=${formValues.username}&password=${formValues.password}`,{
+        //     headers: {
+        //       // btoa is converting our client id/client secret into base64
+        //       Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
+        //       'Content-Type': 'application/x-www-form-urlencoded'
+        //     }
+        //   })
+        // .then(response => {
+        //   console.log("Post Response", response)
+        //   localStorage.setItem('token', response.data.access_token)
+        //   props.history.push("/map")
+        // })
+        // .catch(error => {
+        //   console.log(error)
+        //   setFormValues({username: "", password: ""})
+        //   setInvalidError("Wrong username or password")
+        // })
       }
 
     return(
@@ -51,6 +57,7 @@ const SignIn = props => {
                 <Logo />
                 <Form>
                     <SubTitle>SIGN IN</SubTitle>
+                    <Error>{invalidError}</Error>
                     <Label> Username
                     <Input 
                     type="text" 
@@ -84,7 +91,7 @@ const SignIn = props => {
 // export default Login;
 const mapStateToProps = state => {
     return {
-        formValues: state.formValues, 
+        // formValues: state.formValues, 
         error: state.error
     }
 }

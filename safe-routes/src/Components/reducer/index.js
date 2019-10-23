@@ -3,8 +3,14 @@ import { AXIOS_START, AXIOS_SUCESS, AXIOS_FAIL, AXIOS_POST, LOGIN_POST } from ".
 const initialState = {
     routeData: [],
     isFetching: false,
-    error: ''
+    error: '',
+    token:""
 };
+
+// const formValues = {
+//     formData: [],
+//     error: ''
+// }
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
@@ -36,7 +42,7 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 error: action.payload,
-                routeData: action.payload                
+                token: action.payload                
             }
         default:
             return state;

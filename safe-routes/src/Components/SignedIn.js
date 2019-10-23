@@ -1,9 +1,14 @@
 import React from "react";
 
+import SafeMap from "../Components/NotApp";
+import Users from "../Components/Users";
+
 const SignedIn = () => {
     return (
         <div>
-            <h1>You are signed in!</h1>
+            <h1>Stay Safe!</h1>
+            <Users />
+            <SafeMap />
         </div>
     )
 }
