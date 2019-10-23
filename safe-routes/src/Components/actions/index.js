@@ -23,20 +23,32 @@ export const fetchUser = () => dispatch => {
         .catch(error => dispatch({ type: AXIOS_FAIL, payload: error.response}))
 };
 
+
 //AXIOS_POST
-export const postUser = () => dispatch => {
+export const postUser = (obj, props) => dispatch => {
     dispatch({ type: AXIOS_POST });
-    axiosWithAuth()  
-        .post("/users/user")
-        .then(response => dispatch({ type: AXIOS_POST, payload: response.data}))
+    axios
+        .post("https://detman-saferoutes.herokuapp.com/users/user",JSON.stringify(obj)
+        , {
+            headers: {
+            //   btoa is converting our client id/client secret into base64
+              Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+        )
+        .then(response => {
+            console.log("postUser Res", response)
+            dispatch({ type: AXIOS_POST, payload: response.data})
+            props.history.push('/login')
+        })
         .catch(error => {
             console.log(error)
-        })
+        });
 }
 
 //LOGIN_POST
 export const postLogin = (obj,props) => dispatch => {
-    dispatch({ type: LOGIN_POST });
     axios
         .post(`https://detman-saferoutes.herokuapp.com/login`, `grant_type=password&username=${obj.username}&password=${obj.password}`,{
             headers: {
@@ -51,11 +63,10 @@ export const postLogin = (obj,props) => dispatch => {
             localStorage.setItem('token', response.data.access_token)
             );
             props.history.push('/map')
-            // browserHistory.push('/map')
-
-            // response.history.push("/map")
         })
-        .catch(error => console.log("Login Error", error))
+        .catch(error => {
+            dispatch({ type: LOGIN_POST, payload: "Wrong Email or Password"}
+        )})
 }
 
 

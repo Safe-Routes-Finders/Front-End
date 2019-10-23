@@ -1,12 +1,14 @@
 import React,{useState} from "react";
-import {Btn, FormContainer, Title, Label, Input, LinkContainer, StyledLink, ParentContainer, Form, SubTitle, Error} from "./formsStyle";
+import {Btn, FormContainer, Label, Input, LinkContainer, StyledLink, ParentContainer, Form, SubTitle} from "./formsStyle";
 import * as yup from "yup"
 import SideImage from "./SideImage"
 import Logo from "../Logo/Logo"
+import { connect } from "react-redux";
+import { postUser } from "../actions";
 
-function SignUp(){
+function SignUp(props){
     const [formValues, setFormValues] = useState({
-        email: "",
+        primaryemail: "",
         username: "",
         password: "",
     })
@@ -24,11 +26,14 @@ function SignUp(){
 
     const Submit = (e) => {
         e.preventDefault();
-        schema.validate(formValues)
-            .then(valid=>{
-                if(valid){
-                    console.log(formValues)
-            }})
+        props.postUser(formValues)
+        // schema.validate(formValues)
+        //     .then(valid=>{
+        //         if(valid){
+        //             return props.postUser(formValues)
+        //             console.log(formValues)
+        //             setFormValues(formValues)
+        //     }})
 
     }
 
@@ -39,7 +44,11 @@ function SignUp(){
                 <Form>
                     <SubTitle>SIGN UP</SubTitle> 
                     <Label> Email
-                    <Input type="email" name="email"  placeholder="example@johndoe.com" id="email" onChange={handleOnChange} />
+                    <Input type="email" name="primaryemail"  placeholder="example@johndoe.com" id="email" onChange={handleOnChange} />
+                    {/* <Error>{formValues.formErrors.emailError}</Error> */}
+                    </Label>
+                    <Label> Username
+                    <Input type="text" name="username"  placeholder="example@johndoe.com" id="email" onChange={handleOnChange} />
                     {/* <Error>{formValues.formErrors.emailError}</Error> */}
                     </Label>
                     <Label> New Password
@@ -60,4 +69,15 @@ function SignUp(){
     )
 }
 
-export default SignUp
+// export default SignUp
+
+const mapStateToProps = state => {
+    return {
+        error: state.error
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    {postUser}
+)(SignUp);

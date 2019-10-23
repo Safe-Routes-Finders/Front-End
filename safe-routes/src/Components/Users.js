@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "./utils/axiosWithAuth"
+import AddUser from "../Components/AddUser"
 // import axios from "axios";
 
 const Users = () => {
 
-    const [ user, setUser ] = useState()
-    const [ editUser, setEditUser ] = useState()
+    const [ user, setUser ] = useState([])
+    const [ editingUser, setEditingUser ] = useState()
+    const [userDelete, setUserDelete] = useState(false)
 
     useEffect(() => {
         axiosWithAuth()
-        .get("/users", {
-                headers: {
-                  // btoa is converting our client id/client secret into base64
-                  Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
-                  'Content-Type': 'application/x-www-form-urlencoded'
-                }
-              })
+        .get("/users/users")
         .then(response => {
             // .data?
-            console.log("User Get Res", response)
-            setUser(response)
+            console.log("User Get Res", response.data)
+            setUser(response.data)
         })
         .catch(error => {
             console.log("User Get", error)
@@ -28,17 +24,38 @@ const Users = () => {
 
     const deleteUser = id => {
         axiosWithAuth()
-        .delete(`/users/${id}`)
+        .delete(`/users/user/${id}`)
         .then(response => {
             // .data?
             console.log("Delete Response", response)
-            setUser(response)
+           setUserDelete(true)
         })
+        .then(()=>{
+            setUserDelete(false)
+        })
+    }
+
+    const editUser = userObj => {
+        setEditingUser(userObj);
     }
 
     return (
         <div>
+            <AddUser 
+            setUser={setUser}
+            editingUser={editingUser}
+            />
             <h1>users</h1>
+            {user.map(userObj => {
+                return(
+                <div key={userObj.id}>
+                    <p>{userObj.username}</p>
+                    <p>{userObj.userid}</p>
+                    <p>{userObj.primaryemail}</p>
+                    <button onClick={() => editUser(userObj)}>Edit</button>
+                    <button onClick={() => deleteUser(userObj.userid.toString())}>Delete</button>
+                </div>)
+            })}
         </div>
     )
 }

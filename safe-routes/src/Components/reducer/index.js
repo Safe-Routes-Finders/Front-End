@@ -42,7 +42,7 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 error: action.payload,
-                token: action.payload                
+                token: action.payload               
             }
         default:
             return state;

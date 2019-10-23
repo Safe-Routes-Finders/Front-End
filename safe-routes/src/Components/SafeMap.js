@@ -1,25 +1,47 @@
 //Google Maps Api
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 // import './App.css';
-import { GoogleMap, withScriptjs, withGoogleMap, Marker } from 'react-google-maps';
+import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
+import {axiosWithAuth} from "./utils/axiosWithAuth"
 
 function Map(){
-  const locations = {
-    stores:[
-      {lat: 34.0522, lng: -118.2437, any:{}},
-      {lat: 40.730610, lng: -73.935242}
-    ]
-  }
+  const [marker, setMarker] = useState([]);
+  const [selected, setSelected] = useState(null);
+
+
+  useEffect(() => {
+    axiosWithAuth()
+        .get("/incidents/incidents/toplocations")
+        .then(response => {
+          console.log ("Marker Axios", response);
+          setMarker(response.data)
+        })
+        .catch(error => {
+          console.log("Data not found", error);
+        })
+  }, [])
+
+  
+
   return(
     <GoogleMap 
     defaultZoom={10} 
     defaultCenter={{lat: 34.0522, lng: -118.2437}} 
     >
-    {locations.stores.map(loc=>{
-      return (<Marker position={loc} />)
+    {marker.map(loc=>{
+      let obj = {
+        lat: loc.latitude,
+        lng: loc.longitude
+      };
+    
+      return (<Marker key={loc.location} position={obj} onClick={() => setSelected(loc) }/>)
     })}
-    {/* <Marker position={{lat: 34.0522, lng: -118.2437}} />
-    <Marker position={{lat: 40.730610, lng: -73.935242}} /> */}
+
+      {selected && (
+      <InfoWindow position={{lat: selected.latitude, lng: selected.longitude}} onCloseClick={() => setSelected(null)}>
+        <div>Incident details</div>
+      </InfoWindow> 
+    )}
 
     </GoogleMap>
   )
@@ -39,11 +61,3 @@ export default function SafeMap() {
   );
 }
 
-/*{
-  stores:[
-    {lat: 34.0522, lng: -118.2437},
-    {lat: 40.730610, lng: -73.935242}
-  ]
-
-}
-*/

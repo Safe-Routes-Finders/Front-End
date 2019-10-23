@@ -2,12 +2,7 @@ import React, {useState} from "react";
 import {Btn, FormContainer, Label, Input, LinkContainer, StyledLink, ParentContainer, SubTitle, Form, Error} from "./formsStyle";
 import Logo from "../Logo/Logo";
 import SideImage from "./SideImage"
-
-import axios from "axios";
-
-// import { axiosWithAuth } from "../utils/axiosWithAuth";
 import { connect } from "react-redux";
-import { fetchUser } from "../actions/index";
 import { postLogin } from "../actions";
 
 const SignIn = props => {
@@ -16,7 +11,6 @@ const SignIn = props => {
         username: "",
         password: ""
     })
-    const [invalidError, setInvalidError] = useState("")
     
     const handleOnChange = (e) => {
 
@@ -27,9 +21,7 @@ const SignIn = props => {
 
     const Submit = (e) => {
         e.preventDefault();
-        console.log("im clicked");
         props.postLogin(formValues,props);
-        setFormValues(formValues)
     
         // axios
         // .post(`https://detman-saferoutes.herokuapp.com/login`, `grant_type=password&username=${formValues.username}&password=${formValues.password}`,{
@@ -57,7 +49,7 @@ const SignIn = props => {
                 <Logo />
                 <Form>
                     <SubTitle>SIGN IN</SubTitle>
-                    <Error>{invalidError}</Error>
+                    <Error>{props.error}</Error>
                     <Label> Username
                     <Input 
                     type="text" 
@@ -88,10 +80,8 @@ const SignIn = props => {
     )
 }
 
-// export default Login;
 const mapStateToProps = state => {
     return {
-        // formValues: state.formValues, 
         error: state.error
     }
 }

@@ -7,7 +7,8 @@ export const axiosWithAuth = () => {
         //Change to new baseURL from server
         baseURL: 'https://detman-saferoutes.herokuapp.com',
         headers: {
-          Authorization: token
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
     };
+

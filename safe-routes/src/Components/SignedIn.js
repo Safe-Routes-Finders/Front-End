@@ -1,14 +1,20 @@
 import React from "react";
+import UserInfo from "./UserInfo"
+import {MainContainer} from "../assets/style"
+import Header from "./Header"
 
-import SafeMap from "../Components/NotApp";
+import SafeMap from "../Components/SafeMap";
 import Users from "../Components/Users";
 
 const SignedIn = () => {
     return (
         <div>
-            <h1>Stay Safe!</h1>
-            <Users />
-            <SafeMap />
+            <Header />
+            {/* <Users /> */}
+            <MainContainer>
+                <SafeMap />
+                <UserInfo />
+            </MainContainer>
         </div>
     )
 }
