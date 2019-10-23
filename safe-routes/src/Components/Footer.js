@@ -1,9 +1,25 @@
 import React from 'react'
+import logo from "../assets/logo.png";
 
-export default function Footer() {
+import styled from "styled-components";
+
+const StyledFooter = styled.footer`
+  
+    background-color: #5BD59B;
+    display: flex;
+
+    img{
+        width: 100px;
+    }
+
+`;
+
+function Footer() {
     return (
-        <div>
-            
-        </div>
+        <StyledFooter>
+        <img src={logo} alt="Safe Routes Logo" />
+        </StyledFooter>
     )
 }
+
+export default Footer;

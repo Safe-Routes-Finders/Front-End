@@ -1,6 +1,11 @@
 import React,{useState,useEffect} from 'react'
 import {axiosWithAuth} from "./utils/axiosWithAuth";
 import {UserCard} from "../assets/style"
+import styled from "styled-components";
+
+const StyledUser = styled.div`
+background-color: #5BD59B;
+`;
 
 export default function UserInfo() {
 
@@ -18,6 +23,7 @@ export default function UserInfo() {
     },[])
 
     return (
+        <StyledUser>
         <UserCard>
             <h1>Welcome {userInfo.username}</h1>
             <div>
@@ -25,5 +31,6 @@ export default function UserInfo() {
             <button>Edit</button>
             </div>
         </UserCard>
+        </StyledUser>
     )
 }

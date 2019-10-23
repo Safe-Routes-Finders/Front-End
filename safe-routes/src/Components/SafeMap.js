@@ -3,10 +3,12 @@ import React, {useState, useEffect} from 'react';
 // import './App.css';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import {axiosWithAuth} from "./utils/axiosWithAuth"
+import InfoCard from "./InfoCard"
 
 function Map(){
   const [marker, setMarker] = useState([]);
   const [selected, setSelected] = useState(null);
+  const [address, setAddress] = useState("LOADING...")
 
 
   useEffect(() => {
@@ -34,12 +36,14 @@ function Map(){
         lng: loc.longitude
       };
     
-      return (<Marker key={loc.location} position={obj} onClick={() => setSelected(loc) }/>)
+      return (<Marker key={loc.location} position={obj} onClick={() => {setSelected(loc);setAddress("Loading...")}}/>)
     })}
 
       {selected && (
-      <InfoWindow position={{lat: selected.latitude, lng: selected.longitude}} onCloseClick={() => setSelected(null)}>
-        <div>Incident details</div>
+      <InfoWindow position={{lat: selected.latitude, lng: selected.longitude}} onCloseClick={() => {setSelected(null) }}>
+        <div>
+          <InfoCard address={address} setAddress={setAddress} selected={selected}/>
+        </div>
       </InfoWindow> 
     )}
 
@@ -51,7 +55,7 @@ const WrappedMap = withScriptjs(withGoogleMap(Map));
 
 export default function SafeMap() {
   return (
-    <div className="SafeMap" style={{width: '100vw', height: '100vh'}} >
+    <div className="SafeMap" style={{width: '100vw', height: '78vh'}} >
       <WrappedMap 
      googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDSXVhXDlyG0sASdMicdlZA3ik9RQwVbuY`} loadingElement={<div style={{height: "100%"}} />}
       containerElement={<div style={{height: "100%"}} />}

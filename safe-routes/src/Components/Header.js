@@ -1,7 +1,7 @@
 import React from "react";
 // import "../assets/header.css"
 import styled from "styled-components";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
 
 function Header(){
     
@@ -30,6 +30,7 @@ const StyledHeader = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  height: 10rem;
   h1{
       color: #1E2635;
       font-weight: bold;
@@ -41,7 +42,7 @@ const StyledHeader = styled.div`
       flex-direction: row;
   }
   img{
-      width: 20%;
+      width: 12rem;
   }
 `;
 
