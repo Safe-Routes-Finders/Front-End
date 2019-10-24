@@ -1,8 +1,0 @@
-{
-    "version": 2,
-    "name": "safe-routes",
-    "builds": [{ "src": "safe-routes/package.json", "use": "@now/static-build", "config": {"distDir": "build"} }],
-    "routes": [
-        { "src": "/(.*)", "dest": "safe-routes/$1" }
-    ]
-}
