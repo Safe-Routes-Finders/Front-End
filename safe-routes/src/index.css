@@ -1,8 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  max-width: 100%;
 }
 html{
   font-size: 62.5%;
+}
+
+body{
+  font-family: 'Montserrat', sans-serif;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-size: 1.5rem;
 }
