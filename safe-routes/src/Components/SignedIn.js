@@ -11,7 +11,7 @@ const SignedIn = () => {
     return (
         <div>
             <Header />
-            {/* <Users /> */}
+            <Users />
             <MainContainer>
                 <SafeMap />
                 <UserInfo />

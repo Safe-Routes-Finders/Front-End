@@ -26,17 +26,16 @@ export const fetchUser = () => dispatch => {
 
 //AXIOS_POST
 export const postUser = (obj, props) => dispatch => {
-    dispatch({ type: AXIOS_POST });
+    // dispatch({ type: AXIOS_POST });
+    let jsonobj = JSON.stringify(obj)
     axios
-        .post("https://detman-saferoutes.herokuapp.com/users/user",JSON.stringify(obj)
-        , {
+        .post("https://detman-saferoutes.herokuapp.com/users/user",jsonobj,{
             headers: {
-            //   btoa is converting our client id/client secret into base64
+              // btoa is converting our client id/client secret into base64
               Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
               'Content-Type': 'application/x-www-form-urlencoded'
             }
-        }
-        )
+          })
         .then(response => {
             console.log("postUser Res", response)
             dispatch({ type: AXIOS_POST, payload: response.data})

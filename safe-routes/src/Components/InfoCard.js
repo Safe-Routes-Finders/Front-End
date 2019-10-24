@@ -10,12 +10,13 @@ const InfoCard = (props) => {
         if(activeTab !== tab) setActiveTab(tab);
     }
     const lat = props.selected.latitude;
-    const lng = props.selected.longitude
-    let dependency = props.selected
+    const lng = props.selected.longitude;
+    let dependency = props.selected;
 
     useEffect(()=>{
         axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyA8rlUyV8iSMp8dGOMYAdX7BK91gYxa73E`)
         .then(response=>{
+            console.log("it ran",response.data)
             props.setAddress(response.data.results[1].formatted_address)
         })
         .catch(error=>{

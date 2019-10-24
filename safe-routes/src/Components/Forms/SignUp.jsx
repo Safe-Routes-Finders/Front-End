@@ -5,7 +5,8 @@ import SideImage from "./SideImage"
 import Logo from "../Logo/Logo"
 import { connect } from "react-redux";
 import { postUser } from "../actions";
-
+import {axiosWithAuth} from "../utils/axiosWithAuth"
+import axios from "axios"
 function SignUp(props){
     const [formValues, setFormValues] = useState({
         primaryemail: "",
@@ -26,14 +27,30 @@ function SignUp(props){
 
     const Submit = (e) => {
         e.preventDefault();
-        props.postUser(formValues)
-        // schema.validate(formValues)
-        //     .then(valid=>{
-        //         if(valid){
-        //             return props.postUser(formValues)
-        //             console.log(formValues)
-        //             setFormValues(formValues)
-        //     }})
+        schema.validate(formValues)
+            .then(valid=>{
+                if(valid){
+                    axios
+                    .post("https://detman-saferoutes.herokuapp.com/users/user", formValues,{
+                            headers: {
+                              // btoa is converting our client id/client secret into base64
+                              Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
+                              'Content-Type': 'application/x-www-form-urlencoded'
+                            }
+                          })
+                    .then(response => {
+                        console.log("Post Res", response.data)
+                        // props.setUser(response)
+                        // setNewUser({
+                        //     ...newUser,
+                        //     username: "",
+                        //     password: "",
+                        //     email: ""
+                        // });
+                    })
+                    .catch(error => console.log("Post Error", error.response))
+
+            }})
 
     }
 
@@ -45,16 +62,12 @@ function SignUp(props){
                     <SubTitle>SIGN UP</SubTitle> 
                     <Label> Email
                     <Input type="email" name="primaryemail"  placeholder="example@johndoe.com" id="email" onChange={handleOnChange} />
-                    {/* <Error>{formValues.formErrors.emailError}</Error> */}
                     </Label>
                     <Label> Username
-                    <Input type="text" name="username"  placeholder="example@johndoe.com" id="email" onChange={handleOnChange} />
-                    {/* <Error>{formValues.formErrors.emailError}</Error> */}
+                    <Input type="text" name="username"  placeholder="johndoe" id="email" onChange={handleOnChange} />
                     </Label>
                     <Label> New Password
                     <Input type="password"  name="password" placeholder="**********" onChange={handleOnChange} />
-                    {/* <Error>{formValues.formErrors.passwordError}</Error>
-                    <Error>{formValues.formErrors.checkPasswordError}</Error> */}
                     </Label>
                     <Btn onClick={Submit}>Sign Up</Btn>
                 </Form>

@@ -11,7 +11,7 @@ const Users = () => {
 
     useEffect(() => {
         axiosWithAuth()
-        .get("/users/users")
+        .get("/users/users/all")
         .then(response => {
             // .data?
             console.log("User Get Res", response.data)
@@ -47,14 +47,13 @@ const Users = () => {
             />
             <h1>users</h1>
             {user.map(userObj => {
-                return(
-                <div key={userObj.id}>
+                return <div key={userObj.userid} >
                     <p>{userObj.username}</p>
                     <p>{userObj.userid}</p>
                     <p>{userObj.primaryemail}</p>
                     <button onClick={() => editUser(userObj)}>Edit</button>
                     <button onClick={() => deleteUser(userObj.userid.toString())}>Delete</button>
-                </div>)
+                </div>
             })}
         </div>
     )

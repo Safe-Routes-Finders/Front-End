@@ -2,9 +2,10 @@ import React, {useState, useEffect} from "react";
 import {axiosWithAuth} from "./utils/axiosWithAuth";
 
 const AddUser = props => {
-    const [ newUser, setNewUser ] = useState({username: "", password: "", email: ""})
+    const [ newUser, setNewUser ] = useState({username: "", primaryemail: ""})
 
     const handleChange = event => {
+        // console.log("New User", newUser)
         setNewUser({
             ...newUser,
             [event.target.name]: event.target.value
@@ -15,13 +16,12 @@ const AddUser = props => {
     useEffect(() => {
         if (props.editingUser){
             setNewUser({
-                name: props.editingUser.username,
-                password: props.editingUser.password,
-                email: props.editingUser.email
+                username: props.editingUser.username,
+                primaryemail: props.editingUser.primaryemail
             });
             //if not editing user leave empty
         } else {
-            setNewUser({username: "", password: "", email: ""})
+            setNewUser({username: "", primaryemail: ""})
         }//if props.editingUser changes, re render accordingly
     }, [props.editingUser])
 
@@ -29,10 +29,10 @@ const AddUser = props => {
         event.preventDefault()
         if(props.editingUser){
             axiosWithAuth()
-            .put(`/users/user/${props.editingUser.id}`, newUser)
+            .put(`/users/user/${props.editingUser.userid}`, newUser)
             .then(response => {
                 console.log("Put Res", response.data)
-                props.setUser(response)
+                props.setUser(response.data)
                 setNewUser({
                     ...newUser,
                     username: "",
@@ -82,8 +82,8 @@ const AddUser = props => {
                 <div>
                 <input 
                     type="text"
-                    name="email"
-                    value={newUser.email}
+                    name="primaryemail"
+                    value={newUser.primaryemail}
                     placeholder="Email"
                     onChange={handleChange}
                 />
