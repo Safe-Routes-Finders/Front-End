@@ -23,7 +23,7 @@ export const fetchAll = () => dispatch => {
             dispatch({ type: FETCH_ALL_SUCCESS, payload: response.data})
         })
         .catch(error => {
-            dispatch({ type: FETCH_ALL_FAIL, payload: error})
+            dispatch({ type: FETCH_ALL_FAIL, payload: []})
         })
 }
 

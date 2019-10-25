@@ -40,22 +40,22 @@ function SignUp(props){
 
     const Submit = (e) => {
         e.preventDefault();
-    //     if (password === confirm) {
-    //     schema.validate(formValues)
-    //         .then(valid=>{
-    //             if(valid){
-    //                 axios
-    //                 .post("https://detman-saferoutes.herokuapp.com/createnewuser", formValues)
-    //                 .then(()=>{
-    //                     props.postLogin(formValues,props)
-    //                 })
-    //                 .catch(error => console.log("Post Error", error.response))
-    //         }})
+        if (password === confirm) {
+        schema.validate(formValues)
+            .then(valid=>{
+                if(valid){
+                    axios
+                    .post("https://detman-saferoutes.herokuapp.com/createnewuser", formValues)
+                    .then(()=>{
+                        props.postLogin(formValues,props)
+                    })
+                    .catch(error => console.log("Post Error", error.response))
+            }})
 
-    // } else {
-    //     alert("Password doesn't match")
-    // }}
-    }
+    } else {
+        alert("Password doesn't match")
+    }}
+    
     return(
         <ParentContainer>
             <FormContainer>
