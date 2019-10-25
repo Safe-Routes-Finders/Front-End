@@ -1,7 +1,7 @@
 import React from 'react';
-import Login from "./Components/Forms/SignIn";
-import SignUp from "./Components/Forms/SignUp";
-import SignedIn from "./Components/SignedIn";
+import SignIn from "./Components/Forms/SignIn.js"
+import SignUp from "./Components/Forms/SignUp.js"
+import SignedIn from "./Components/SignedIn"
 
 
 
@@ -15,7 +15,7 @@ function App() {
   return (
     <Router  >
     <div>
-      <Route exact path="/" render={(props)=><Login {...props}/>}/>
+      <Route exact path="/" render={(props)=><SignIn {...props}/>}/>
       <Route path="/SignUp" render={(props)=><SignUp {...props}/>}/>
       <PrivateRoute path="/map" component={SignedIn} />
     </div>

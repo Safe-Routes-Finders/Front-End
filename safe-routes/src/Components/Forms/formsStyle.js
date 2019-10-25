@@ -1,30 +1,36 @@
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 
-
 export const FormContainer = styled.div`
     background: white;
     padding: 5rem;
     display: flex;
     flex-direction: column;
     flex: 2;
-    height: 100%;
+    height:100%;
     justify-content: space-around;
 `
 
 export const Btn = styled.button `
-    background: #16416C;
+    background: #5BD59B;
     color: white;
     text-transform: uppercase;
     font-weight: 700;
+    font-size: 2rem;
     padding: 2rem 7rem;
     border: none;
     cursor: pointer;
+    :hover{
+        background: white;
+        color: #5BD59B;
+        border: 1px solid #5BD59B;
+    }
 `
 
 export const Title = styled.h1 `
-    font-size: 5rem;
-    color: #16416c
+    font-size: 7rem;
+    color: #5BD59B;
+    text-shadow: 2px 2px #333333;
 `
 
 export const Label = styled.label `
@@ -48,12 +54,15 @@ export const Input = styled.input `
 export const LinkContainer = styled.div `
     font-size: 1.5rem;
     justify-self: flex-end;
+    .logo{
+        width: 50px;
+    }
 `
 export const StyledLink = styled(Link)`
-    font-size: 1.6rem;
+    font-size: 2.2rem;
     font-style: italic;
     text-decoration: none;
-    color: black;
+    color: #5BD59B;
     margin: 0.2rem 0;
 `
 

@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from "react";
 import {axiosWithAuth} from "./utils/axiosWithAuth";
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 const AddUser = props => {
-    const [ newUser, setNewUser ] = useState({username: "", primaryemail: ""})
 
+    const [ newUser, setNewUser ] = useState({username: "", primaryemail: ""})
+    
     const handleChange = event => {
-        // console.log("New User", newUser)
         setNewUser({
             ...newUser,
             [event.target.name]: event.target.value
         })
     }
-
 
     useEffect(() => {
         if (props.editingUser){
@@ -27,69 +27,44 @@ const AddUser = props => {
 
     const onSubmit = event => {
         event.preventDefault()
-        if(props.editingUser){
             axiosWithAuth()
             .put(`/users/user/${props.editingUser.userid}`, newUser)
             .then(response => {
-                console.log("Put Res", response.data)
-                props.setUser(response.data)
+                console.log("Put Res", response)
                 setNewUser({
                     ...newUser,
                     username: "",
                     password: "",
-                    email: ""
-                });
-            })
-        } else {
-            axiosWithAuth()
-            .post("/users/user", newUser)
-            .then(response => {
-                console.log("Post Res", response.data)
-                props.setUser(response)
-                setNewUser({
-                    ...newUser,
-                    username: "",
-                    password: "",
-                    email: ""
-                });
-            })
-            .catch(error => console.log("Post Error", error.response))
-        }
+                    primaryemail: ""
+                })
+                props.setEditingUser(null)
+            },[])
     };
 
     return (
-        
-        
-            <form onSubmit={onSubmit}>
-                <div>
-                <input 
+        <div style={{padding: "1rem"}}>
+            <h1 style={{textAlign: "center", fontSize: "3rem", textTransform: "uppercase"}}>Users</h1>
+            <Form onSubmit={onSubmit} style={{width:"20%",margin: "auto", display: "flex", flexDirection: "column" , alignItems:"center"}}>
+            
+                <Input
+                    style={{margin: "0.5rem"}} 
                     type="text"
                     name="username"
-                    value={newUser.name}
+                    value={newUser.username}
                     placeholder="User Name"
                     onChange={handleChange}
                 />
-                </div>
-                <div>
-                <input 
-                    type="text"
-                    name="password"
-                    value={newUser.password}
-                    placeholder="Password"
-                    onChange={handleChange}
-                />
-                </div>
-                <div>
-                <input 
+                <Input 
+                    style={{margin: "0.5rem"}} 
                     type="text"
                     name="primaryemail"
                     value={newUser.primaryemail}
                     placeholder="Email"
                     onChange={handleChange}
                 />
-                </div>
-                <button onClick={handleChange}>{props.editingUser ? "Submit Edit" : "Add User"}</button>
-            </form>
+              <Button style={{padding: "0.3rem 4rem", fontSize: "2rem", margin: "1.2rem"}} onClick={onSubmit}>{props.editingUser ? "Submit Edit" : "Edit User"}</Button>
+            </Form>
+        </div>
     )
 }
 

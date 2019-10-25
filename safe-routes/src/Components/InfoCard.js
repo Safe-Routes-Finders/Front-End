@@ -24,6 +24,14 @@ const InfoCard = (props) => {
         })
     },[dependency])
 
+    useEffect(()=>{
+        axios
+        .get("https://saferoutes-ds.herokuapp.com/predict/33.3427/-118.3258/2019-10-24%2016:33:20/")
+        .then(response=>{
+            console.log(response)
+        })
+    },[])
+
     return (
         <div>
             <h3>{props.address}</h3>

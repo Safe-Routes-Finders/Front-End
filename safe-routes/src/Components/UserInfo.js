@@ -3,18 +3,23 @@ import {axiosWithAuth} from "./utils/axiosWithAuth";
 import {UserCard} from "../assets/style"
 import styled from "styled-components";
 
+
 const StyledUser = styled.div`
 background-color: #5BD59B;
+padding:1vh;
 `;
 
-export default function UserInfo() {
+export default function UserInfo(props) {
 
     const [userInfo,setUserInfo] = useState({})
+
+
+
+
     useEffect(()=>{
         axiosWithAuth()
         .get("/users/getuserinfo")
         .then(response=>{
-            console.log(response.data)
             setUserInfo(response.data)
         })
         .catch(error=>{
@@ -28,7 +33,6 @@ export default function UserInfo() {
             <h1>Welcome {userInfo.username}</h1>
             <div>
             <h3>{userInfo.primaryemail}</h3>
-            <button>Edit</button>
             </div>
         </UserCard>
         </StyledUser>

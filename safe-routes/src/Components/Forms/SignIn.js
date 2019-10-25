@@ -4,6 +4,7 @@ import Logo from "../Logo/Logo";
 import SideImage from "./SideImage"
 import { connect } from "react-redux";
 import { postLogin } from "../actions";
+import logo from "../../assets/logo.png";
 
 const SignIn = props => {
 
@@ -22,25 +23,7 @@ const SignIn = props => {
     const Submit = (e) => {
         e.preventDefault();
         props.postLogin(formValues,props);
-    
-        // axios
-        // .post(`https://detman-saferoutes.herokuapp.com/login`, `grant_type=password&username=${formValues.username}&password=${formValues.password}`,{
-        //     headers: {
-        //       // btoa is converting our client id/client secret into base64
-        //       Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
-        //       'Content-Type': 'application/x-www-form-urlencoded'
-        //     }
-        //   })
-        // .then(response => {
-        //   console.log("Post Response", response)
-        //   localStorage.setItem('token', response.data.access_token)
-        //   props.history.push("/map")
-        // })
-        // .catch(error => {
-        //   console.log(error)
-        //   setFormValues({username: "", password: ""})
-        //   setInvalidError("Wrong username or password")
-        // })
+
       }
 
     return(
@@ -69,8 +52,10 @@ const SignIn = props => {
                     <Btn onClick={Submit}>Sign In</Btn>
                 </Form>
                 <LinkContainer>
-                    <StyledLink to="/SignIn">Forgot Password?</StyledLink>
+                    {/* <StyledLink to="/SignIn">Forgot Password?</StyledLink> */}
+                    <img className="logo" src={logo} alt="Safe Routes Logo" />
                     <div>
+                    
                         <span>Don't Have An Account? </span><StyledLink to="/SignUp">Sign Up</StyledLink>
                     </div>
                 </LinkContainer>

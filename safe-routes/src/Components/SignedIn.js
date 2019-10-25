@@ -1,5 +1,5 @@
 import React from "react";
-import UserInfo from "./UserInfo"
+import UserInfo from "./UserInfo.js"
 import {MainContainer} from "../assets/style"
 import Header from "./Header"
 import Footer from "./Footer"
@@ -7,15 +7,18 @@ import Footer from "./Footer"
 import SafeMap from "../Components/SafeMap";
 import Users from "../Components/Users";
 
-const SignedIn = () => {
+const SignedIn = (props) => {
     return (
         <div>
-            <Header />
-            <Users />
+            <Header 
+            {...props}
+            />
+            {/* <Users /> */}
             <MainContainer>
                 <SafeMap />
-                <UserInfo />
+                <UserInfo {...props}/>
             </MainContainer>
+            <Users />
             <Footer />
         </div>
     )

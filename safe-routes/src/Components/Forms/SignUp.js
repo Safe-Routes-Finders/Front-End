@@ -5,9 +5,13 @@ import SideImage from "./SideImage"
 import Logo from "../Logo/Logo"
 import { connect } from "react-redux";
 import { postUser } from "../actions";
-import {axiosWithAuth} from "../utils/axiosWithAuth"
 import axios from "axios"
+import {postLogin} from "../actions"
+import logo from "../../assets/logo.png";
+
 function SignUp(props){
+    const [password, setPassword] = useState("");
+    const [confirm, setConfirm] = useState("");
     const [formValues, setFormValues] = useState({
         primaryemail: "",
         username: "",
@@ -23,37 +27,35 @@ function SignUp(props){
 
     const handleOnChange = (e) => {
         setFormValues({...formValues, [e.target.name]: e.target.value});
+        if(e.target.name === "password"){
+            setPassword(e.target.value)     
+        };
+        if(e.target.name === "confirm"){
+            setConfirm(e.target.value)
+        }
+    
     }
+
+    
 
     const Submit = (e) => {
         e.preventDefault();
-        schema.validate(formValues)
-            .then(valid=>{
-                if(valid){
-                    axios
-                    .post("https://detman-saferoutes.herokuapp.com/users/user", formValues,{
-                            headers: {
-                              // btoa is converting our client id/client secret into base64
-                              Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
-                              'Content-Type': 'application/x-www-form-urlencoded'
-                            }
-                          })
-                    .then(response => {
-                        console.log("Post Res", response.data)
-                        // props.setUser(response)
-                        // setNewUser({
-                        //     ...newUser,
-                        //     username: "",
-                        //     password: "",
-                        //     email: ""
-                        // });
-                    })
-                    .catch(error => console.log("Post Error", error.response))
+    //     if (password === confirm) {
+    //     schema.validate(formValues)
+    //         .then(valid=>{
+    //             if(valid){
+    //                 axios
+    //                 .post("https://detman-saferoutes.herokuapp.com/createnewuser", formValues)
+    //                 .then(()=>{
+    //                     props.postLogin(formValues,props)
+    //                 })
+    //                 .catch(error => console.log("Post Error", error.response))
+    //         }})
 
-            }})
-
+    // } else {
+    //     alert("Password doesn't match")
+    // }}
     }
-
     return(
         <ParentContainer>
             <FormContainer>
@@ -66,12 +68,16 @@ function SignUp(props){
                     <Label> Username
                     <Input type="text" name="username"  placeholder="johndoe" id="email" onChange={handleOnChange} />
                     </Label>
-                    <Label> New Password
+                    <Label> Create Password
                     <Input type="password"  name="password" placeholder="**********" onChange={handleOnChange} />
+                    </Label>
+                    <Label> Confirm Password
+                    <Input type="password"  name="confirm" placeholder="**********" onChange={handleOnChange} />
                     </Label>
                     <Btn onClick={Submit}>Sign Up</Btn>
                 </Form>
                 <LinkContainer>
+                <img className="logo" src={logo} alt="Safe Routes Logo" />
                     <div>
                         <span>Already Have An Account? </span><StyledLink to="/">Sign In</StyledLink>
                     </div>
@@ -82,8 +88,6 @@ function SignUp(props){
     )
 }
 
-// export default SignUp
-
 const mapStateToProps = state => {
     return {
         error: state.error
@@ -92,5 +96,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    {postUser}
+    {postUser,postLogin}
 )(SignUp);

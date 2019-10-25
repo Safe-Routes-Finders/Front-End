@@ -1,26 +1,62 @@
 import { axiosWithAuth } from "../../Components/utils/axiosWithAuth";
 import axios from "axios";
 
-export const AXIOS_START = 'AXIOS_START';
-export const AXIOS_SUCESS = 'AXIOS_SUCESS';
-export const AXIOS_FAIL = 'AXIOS_FAIL';
+export const FETCH_USER_START = 'FETCH_USER_START';
+export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+export const FETCH_USER_FAIL = 'FETCH_USER_FAIL';
 export const AXIOS_POST = 'AXIOS_POST';
+export const DELETE_USER_START = 'DELETE_USER_START';
+export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
+export const DELETE_USER_FAIL = 'DELETE_USER_FAIL';
+export const FETCH_ALL_USERS = 'FETCH_ALL_USERS';
+export const FETCH_ALL_SUCCESS = 'FETCH_ALL_SUCCESS';
+export const FETCH_ALL_FAIL = 'FETCH_ALL_FAIL';
 export const LOGIN_POST = "LOGIN_POST";
-// export const AXIOS_PUT = 'AXIOS_PUT';
-// export const AXIOS_DELETE = 'AXIOS_DELETE';
 
-export const fetchUser = () => dispatch => {
-    //AXIOS_START
-    dispatch({ type: AXIOS_START });
+//FETCH_ALL_USERS
+export const fetchAll = () => dispatch => {
+    dispatch({ type: FETCH_ALL_USERS, payload: true});
+        axiosWithAuth()
+        .get("/users/users/all")
+        .then(response => {
+            console.log("FetchALL res", response)
+            dispatch({ type: FETCH_ALL_SUCCESS, payload: response.data})
+        })
+        .catch(error => {
+            dispatch({ type: FETCH_ALL_FAIL, payload: error})
+        })
+}
+
+//DELETE USER
+export const deleteUser = (id) => dispatch => {
+    dispatch({ type: DELETE_USER_START});
+        axiosWithAuth()
+        .delete(`/users/user/${id}`)
+        .then(response => {
+            console.log("Delete Res", response)
+            dispatch({ type: DELETE_USER_SUCCESS, payload: true});
+        })
+        .then(response => {
+            dispatch({ type: DELETE_USER_SUCCESS, payload: false})
+        })
+        .catch(error => {
+            dispatch({ type: DELETE_USER_FAIL, payload: false})
+        })
+    }
+
+//FETCH_USER_INFO
+export const fetchUserInfo = () => dispatch => {
+    //FETCH_USER_START
+    dispatch({ type: FETCH_USER_START });
     axiosWithAuth()
-        .get("/users")
-        //AXIOS_SUCESS
+        .get("/users/getuserinfo")
+        //FETCH_USER_SUCCESS
         .then(response => {
             console.log("Get Response", response);
-            dispatch({ type: AXIOS_SUCESS, payload: response.data});
+            dispatch({ type: FETCH_USER_SUCCESS, payload: response.data});
         })
-        //AXIOS_FAIL
-        .catch(error => dispatch({ type: AXIOS_FAIL, payload: error.response}))
+        //FETCH_USER_FAIL
+        .catch(error => dispatch({ type: FETCH_USER_FAIL, payload: error.response}))
 };
 
 
@@ -70,18 +106,18 @@ export const postLogin = (obj,props) => dispatch => {
 
 
 
-//AXIOS_DELETE
-
-// const deleteFriend = id => {
+    //FETCH_USER_START
+//     dispatch({ type: FETCH_USER_START });
 //     axiosWithAuth()
-//     .delete(`/api/friends/${id}`)
-//     .then(response => {
-//         console.log("Delete Response", response)
-//         //Updates rendered data to show that friend was deleted
-//         //Try on add!
-//         setFriends(response.data);
-//     })
-// }
+//         .get("/users/getuserinfo")
+//         //FETCH_USER_SUCCESS
+//         .then(response => {
+//             console.log("Get Response", response);
+//             dispatch({ type: FETCH_USER_SUCCESS, payload: response.data});
+//         })
+//         //FETCH_USER_FAIL
+//         .catch(error => dispatch({ type: FETCH_USER_FAIL, payload: error.response}))
+// };
 
 
 

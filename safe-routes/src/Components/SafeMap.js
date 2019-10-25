@@ -1,11 +1,14 @@
 //Google Maps Api
 import React, {useState, useEffect} from 'react';
+// import { connect } from "react-redux";
 // import './App.css';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import {axiosWithAuth} from "./utils/axiosWithAuth"
-import InfoCard from "./InfoCard"
+import InfoCard from "./InfoCard";
+import {connect} from "react-redux";
+import {fetchUserInfo} from "./actions/"
 
-function Map(){
+function Map(props){
   const [marker, setMarker] = useState([]);
   const [selected, setSelected] = useState(null);
   const [address, setAddress] = useState("LOADING...")
@@ -22,8 +25,6 @@ function Map(){
           console.log("Data not found", error);
         })
   }, [])
-
-  
 
   return(
     <GoogleMap 
@@ -53,7 +54,7 @@ function Map(){
 
 const WrappedMap = withScriptjs(withGoogleMap(Map));
 
-export default function SafeMap() {
+function SafeMap(){
   return (
     <div className="SafeMap" style={{width: '100vw', height: '78vh'}} >
       <WrappedMap 
@@ -65,3 +66,7 @@ export default function SafeMap() {
   );
 }
 
+export default connect(
+	null,
+	{ fetchUserInfo }
+)(SafeMap);
